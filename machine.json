@@ -1,0 +1,1 @@
+{"states":[[{"tape_change":1,"write":1,"next":1},{"tape_change":-1,"write":1,"next":2}],[{"tape_change":-1,"write":1,"next":0},{"tape_change":1,"write":1,"next":1}],[{"tape_change":-1,"write":1,"next":1},{"tape_change":1,"write":1,"next":null}]],"state":0}
