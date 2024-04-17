@@ -1,6 +1,5 @@
 use core::panic;
-use std::fmt::{write, Display};
-
+use std::fmt::Display;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, Eq, PartialEq)]
@@ -17,6 +16,7 @@ pub struct State(Action, Action);
 pub struct Machine {
     states: Vec<State>,
     state: usize,
+    actions: usize
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
@@ -39,7 +39,7 @@ impl State {
 
 impl Machine {
     pub fn new(states: Vec<State>) -> Machine {
-        Machine { states, state: 0 }
+        Machine { states, state: 0, actions: 0 }
     }
 
     pub fn set_state(&mut self, state: usize) {
@@ -48,6 +48,7 @@ impl Machine {
 
     pub fn run(&mut self, mut tape: Tape) {
         loop {
+            self.actions += 1;
             let state = match tape.at() {
                 0 => self.states[self.state].0,
                 1 => self.states[self.state].1,
@@ -59,12 +60,13 @@ impl Machine {
             if let Some(next) = state.next {
                 self.state = next;
             } else {
+                println!("{tape}, State: {}, Actions: {}", self.state, self.actions);
                 return;
             }
 
             tape.inc_dec(state.tape_change);
 
-            println!("{tape}, State: {}", self.state);
+            println!("{tape}, State: {}, Actions: {}", self.state, self.actions);
         }
     }
 }
@@ -85,8 +87,8 @@ impl Tape {
     }
 
     pub fn inc(&mut self) {
-        if self.curr == self.tape.capacity() - 1 {
-            self.tape.extend(vec![0; self.tape.capacity()]);
+        if self.curr == self.tape.len() - 1 {
+            self.tape.extend(vec![0; self.tape.len()]);
         }
         self.curr += 1;
     }

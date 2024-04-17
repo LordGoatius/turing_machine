@@ -1,6 +1,6 @@
 use std::fs;
 
-use crate::config::{Config, TuringAction};
+use crate::config::{Config, Create, TuringAction};
 use crate::create::{create_machine, create_tape};
 use crate::machine::{Machine, Tape};
 use serde_json::from_str;
@@ -14,8 +14,14 @@ pub fn run(config: Config) {
             machine.run(tape);
 
         },
-        TuringAction::Create => {
+        TuringAction::Create(Create::Both) => {
             create_machine();
+            create_tape();
+        },
+        TuringAction::Create(Create::Machine) => {
+            create_machine();
+        },
+        TuringAction::Create(Create::Tape) => {
             create_tape();
         }
     }

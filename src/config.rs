@@ -11,7 +11,8 @@ pub struct Config {
 
 #[derive(Subcommand, Debug)]
 pub enum TuringAction {
-    Create,
+    #[command(subcommand)]
+    Create(Create),
 
     Run {
         #[arg(short, long)]
@@ -19,4 +20,11 @@ pub enum TuringAction {
         #[arg(short, long)]
         tape_path:    Box<Path>
     }
+}
+
+#[derive(Subcommand, Debug)]
+pub enum Create {
+    Both,
+    Machine,
+    Tape
 }
