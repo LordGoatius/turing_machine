@@ -18,7 +18,7 @@ pub enum TuringAction {
         #[arg(short, long)]
         machine_path: Box<Path>,
         #[arg(short, long)]
-        tape_path:    Box<Path>
+        tape_path:    Box<Path>,
     }
 }
 

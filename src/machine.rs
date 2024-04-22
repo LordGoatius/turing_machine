@@ -66,7 +66,11 @@ impl Machine {
 
             tape.inc_dec(state.tape_change);
 
-            println!("{tape}, State: {}, Actions: {}", self.state, self.actions);
+            // eprintln!("{tape}, State: {}, Actions: {}", self.state, self.actions);
+            if self.actions % 1_000_000 == 0 {
+                eprintln!("{tape}, State: {}, Actions: {}", self.state, self.actions);
+            }
+            // println!("Actions: {}", self.actions);
         }
     }
 }
