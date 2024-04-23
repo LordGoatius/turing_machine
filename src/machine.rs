@@ -46,7 +46,7 @@ impl Machine {
         self.state = state;
     }
 
-    pub fn run(&mut self, mut tape: Tape) {
+    pub fn run(&mut self, mut tape: Tape, log: usize, verbose: bool) {
         loop {
             self.actions += 1;
             let state = match tape.at() {
@@ -66,11 +66,12 @@ impl Machine {
 
             tape.inc_dec(state.tape_change);
 
-            // eprintln!("{tape}, State: {}, Actions: {}", self.state, self.actions);
-            if self.actions % 1_000_000 == 0 {
-                eprintln!("{tape}, State: {}, Actions: {}", self.state, self.actions);
+            if self.actions % log == 0 {
+                if verbose {
+                    print!("{tape}, State: {}, ", self.state);
+                }
+                println!("Actions: {}", self.actions);
             }
-            // println!("Actions: {}", self.actions);
         }
     }
 }

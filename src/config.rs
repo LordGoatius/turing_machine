@@ -19,6 +19,10 @@ pub enum TuringAction {
         machine_path: Box<Path>,
         #[arg(short, long)]
         tape_path:    Box<Path>,
+        #[arg(short, long, default_value_t = 1)]
+        log:          usize,
+        #[arg(short, long, default_value_t = false)]
+        verbose:      bool
     }
 }
 
